@@ -68,7 +68,7 @@ class ConfigService {
         // autoLoadEntities: true,
         synchronize: true,
         migrationsRun: true,
-        ssl: false,
+        ssl: true,
       };
     }
   }
