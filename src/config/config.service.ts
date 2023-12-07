@@ -32,6 +32,7 @@ class ConfigService {
 
   public getTypeOrmConfig(): TypeOrmModuleOptions {
     const currentEnv = this.getValue('NODE_ENV');
+    const pgdBURL = this.getValue('DATABASE_URL');
 
     console.info('CURRENT ENV - %s', currentEnv);
 
@@ -57,11 +58,7 @@ class ConfigService {
     } else {
       return {
         type: 'postgres',
-        host: this.getValue('DB_HOST'),
-        port: parseInt(this.getValue('DB_PORT')),
-        username: this.getValue('DB_USER'),
-        password: this.getValue('DB_PASSWORD'),
-        database: this.getValue('DATABASE'),
+        url: pgdBURL,
         entities: [
           __dirname + '/../**/*.entity{.ts,.js}',
           __dirname + '/../**/*.repository{.ts,.js}',
