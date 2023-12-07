@@ -20,10 +20,6 @@ class ConfigService {
     return this;
   }
 
-  public getPort() {
-    return this.getValue('PORT', true);
-  }
-
   public isProduction() {
     const mode = this.getValue('NODE_ENV', false)?.toLowerCase();
     return mode == 'production';

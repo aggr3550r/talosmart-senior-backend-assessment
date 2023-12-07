@@ -1,7 +1,9 @@
+import { PageOptionsDTO } from '../../dtos/paging/page-options.dto';
+
 export interface IGenericRepository<T> {
-  findById(): Promise<T>;
-  create(): Promise<T>;
-  update(): Promise<T>;
-  delete(): Promise<T>;
-  filter(): Promise<any>;
+  findById(id: string, withFields?: boolean): Promise<T>;
+  create(data: T): Promise<T>;
+  update(id: string, data: Partial<T>): Promise<void>;
+  delete(id: string): Promise<void>;
+  filter(pageOptionsDTO: PageOptionsDTO): Promise<any>;
 }

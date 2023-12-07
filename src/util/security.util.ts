@@ -3,13 +3,15 @@ import { randomBytes, scrypt as _scrypt } from 'crypto';
 import * as JWT from 'jsonwebtoken';
 import { ResponseModel } from '../models/response.model';
 import { NotFoundException } from '@nestjs/common';
+import { User } from '../modules/user/data/user.entity';
+import { AppError } from '../exceptions/app.error';
 
 const scrypt = promisify(_scrypt);
 
 export default class SecurityUtil {
   static async generateTokenWithSecret(user: User): Promise<string> {
-    const { id, role } = user;
-    return JWT.sign({ id, role }, process.env.JWT_SECRET, {
+    const { id } = user;
+    return JWT.sign({ id }, process.env.JWT_SECRET, {
       expiresIn: process.env.JWT_EXPIRES_IN,
     });
   }

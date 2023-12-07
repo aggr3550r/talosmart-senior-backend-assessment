@@ -13,7 +13,7 @@ export class PageOptionsDTO {
   @Min(1)
   @Max(50)
   @IsOptional()
-  take?: number = 20;
+  take?: number = 12;
 
   @IsOptional()
   sort_by?: string;
