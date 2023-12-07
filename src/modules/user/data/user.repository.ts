@@ -1,5 +1,7 @@
+import { Injectable } from '@nestjs/common';
 import { IUserRepository } from '../../../interfaces/database/IUserRepository';
 
+@Injectable()
 export class UserRepository<T> implements IUserRepository<T> {
   findById(): Promise<T> {
     throw new Error('Method not implemented.');

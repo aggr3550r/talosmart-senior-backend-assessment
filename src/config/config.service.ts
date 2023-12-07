@@ -1,6 +1,5 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
+import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 
-const fs = require('fs');
 // eslint-disable-next-line @typescript-eslint/no-var-requires
 require('dotenv').config();
 
@@ -10,14 +9,14 @@ class ConfigService {
   private getValue(key: string, throwOnMissing = true): string {
     const value = this.env[key];
     if (!value && throwOnMissing) {
-      console.log(`config error - missing env.${key}`);
+      console.error(`config error - missing env.${key}`);
     }
 
     return value;
   }
 
   public ensureValues(keys: string[]) {
-    keys.forEach((k) => this.getValue(k, true));
+    keys.forEach((k) => this.getValue(k, false));
     return this;
   }
 
@@ -37,12 +36,12 @@ class ConfigService {
 
   public getTypeOrmConfig(): TypeOrmModuleOptions {
     return {
-      type: 'postgres',
-      host: this.getValue('PG_HOST'),
-      port: parseInt(this.getValue('PG_PORT')),
-      username: this.getValue('PG_USER'),
-      password: this.getValue('PG_PASSWORD'),
-      database: this.getValue('PG_DATABASE'),
+      type: 'mysql',
+      host: this.getValue('MYSQL_HOST'),
+      port: parseInt(this.getValue('MYSQL_PORT')),
+      username: this.getValue('MYSQL_USER'),
+      password: this.getValue('MYSQL_PASSWORD'),
+      database: this.getValue('MYSQL_DATABASE'),
       entities: [
         __dirname + '/../**/*.entity{.ts,.js}',
         __dirname + '/../**/*.repository{.ts,.js}',
@@ -51,21 +50,18 @@ class ConfigService {
       migrations: [__dirname + 'src/migration/*.ts'],
       // autoLoadEntities: true,
       synchronize: true,
-      retryAttempts: 5,
       migrationsRun: true,
-      cli: {
-        migrationsDir: 'src/migration',
-      },
+      ssl: false,
     };
   }
 }
 
 const configService = new ConfigService(process.env).ensureValues([
-  'PG_HOST',
-  'PG_PORT',
-  'PG_USER',
-  'PG_PASSWORD',
-  'PG_DATABASE',
+  'MYSQL_HOST',
+  'MYSQL_PORT',
+  'MYSQL_USER',
+  'MYSQL_PASSWORD',
+  'MYSQL_DATABASE',
 ]);
 
 export { configService };
