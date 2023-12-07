@@ -14,12 +14,13 @@ export class UserRepository implements IUserRepository<User> {
   }
 
   async findById(id: string): Promise<User> {
-    const user = await this.repository.findOne({
+    let user = await this.repository.findOne({
       where: {
         id,
         is_active: true,
       },
     });
+
 
     return user;
   }
@@ -38,6 +39,8 @@ export class UserRepository implements IUserRepository<User> {
   async create(data: CreateUserDTO): Promise<User> {
     let newUser = this.repository.create(data);
     newUser = await this.repository.save(newUser);
+
+    newUser.password = undefined;
 
     return newUser;
   }

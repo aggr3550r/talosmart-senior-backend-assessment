@@ -76,7 +76,7 @@ export class ProductRepository implements IProductRepository<Product> {
       order: {
         minimum_cost: 'ASC',
       },
-      select: ['id', 'name', 'image_url'],
+      select: ['id', 'name', 'image_url', 'minimum_cost', 'maximum_cost'],
       skip: pageOptionsDTO?.skip,
       take: pageOptionsDTO?.take,
     });
