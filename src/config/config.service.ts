@@ -15,8 +15,8 @@ class ConfigService {
     return value;
   }
 
-  public ensureValues(keys: string[]) {
-    keys.forEach((k) => this.getValue(k, false));
+  public ensureValues(keys: string[], throwOnMissing: boolean) {
+    keys.forEach((k) => this.getValue(k, throwOnMissing));
     return this;
   }
 
@@ -52,12 +52,15 @@ class ConfigService {
   }
 }
 
-const configService = new ConfigService(process.env).ensureValues([
-  'MYSQL_HOST',
-  'MYSQL_PORT',
-  'MYSQL_USER',
-  'MYSQL_PASSWORD',
-  'MYSQL_DATABASE',
-]);
+const configService = new ConfigService(process.env).ensureValues(
+  [
+    'MYSQL_HOST',
+    'MYSQL_PORT',
+    'MYSQL_USER',
+    'MYSQL_PASSWORD',
+    'MYSQL_DATABASE',
+  ],
+  true,
+);
 
 export { configService };
