@@ -1,34 +1,66 @@
-import { ConflictException, Injectable } from '@nestjs/common';
+import {
+  ConflictException,
+  Inject,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { AppError } from '../../exceptions/app.error';
-import { FindOneOptions } from 'typeorm';
-import { CreateUserDTO } from './dtos/user.dto';
+import { CreateUserDTO, UpdateUserDTO, UserQueryDTO } from './dtos/user.dto';
 import { User } from './data/user.entity';
+import { UserRepository } from './data/user.repository';
 
 @Injectable()
 export class UserService {
-  constructor() {}
+  constructor(@Inject(UserRepository) private userRepository: UserRepository) {}
 
   async createUser(data: CreateUserDTO): Promise<User> {
     try {
-      const options: FindOneOptions<User> = {
-        where: {
-          email: data.email,
-          is_active: true,
-        },
-      };
-      const userAlreadyExists = await this.userRepository.findOne(options);
+      const userAlreadyExists = await this.userRepository.findById(data?.email);
 
       if (userAlreadyExists) {
         throw new ConflictException('User already exists');
       }
 
-      const newUser = this.userRepository.create(data);
-      return await this.userRepository.save(newUser);
+      return this.userRepository.create(data);
     } catch (error) {
       console.error('createUser() error', error);
 
       throw new AppError(
         error?.message || 'An error occurred while creating user.',
+        error?.statusCode || 400,
+      );
+    }
+  }
+
+  async findUserByEmail(email: string) {
+    try {
+      const user = await this.userRepository.findByEmail(email);
+
+      if (!user) {
+        throw new NotFoundException(
+          `Could not find user with email ${user?.email}.`,
+        );
+      }
+
+      return user;
+    } catch (error) {
+      console.error('findUserByEmail() error', error);
+
+      throw new AppError(
+        error?.message || 'An error occurred while getting user by email.',
+        error?.statusCode || 400,
+      );
+    }
+  }
+
+  async updateUser(userId: string, data: UpdateUserDTO) {
+    try {
+      return await this.userRepository.update(userId, data);
+    } catch (error) {
+      console.error('updateUser() error', error);
+
+      throw new AppError(
+        error?.message || 'An error occurred while updating user.',
         error?.statusCode || 400,
       );
     }

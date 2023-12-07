@@ -12,7 +12,6 @@ export default class AuthService {
 
   /**
    * This method creates a JWT token to be sent to the client which it will use to make subsequent requests to protected routes.
-   * It essentially simulates logging a user into the app.
    * @param user
    * @param statusCode
    * @param res
