@@ -6,3 +6,7 @@ export class LoginDTO {
   email: string;
   password: string;
 }
+
+
+export type ISignUpDTO = {} & SignUpDTO;
+export type ILoginDTO = {} & LoginDTO;
