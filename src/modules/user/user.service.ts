@@ -13,6 +13,19 @@ import { UserRepository } from './data/user.repository';
 export class UserService {
   constructor(@Inject(UserRepository) private userRepository: UserRepository) {}
 
+  async getUserById(userId: string) {
+    try {
+      return await this.userRepository.findById(userId);
+    } catch (error) {
+      console.error('getUserById() error', error);
+
+      throw new AppError(
+        error?.message || 'An error occurred while retrieving user.',
+        error?.statusCode || 400,
+      );
+    }
+  }
+
   async createUser(data: CreateUserDTO): Promise<User> {
     try {
       const userAlreadyExists = await this.userRepository.findById(data?.email);

@@ -16,7 +16,7 @@ export default class AuthService {
    * @param statusCode
    * @param res
    */
-  async createAndSendAuthToken(user: User, statusCode: number, res: Response) {
+  async createAndSendAuthToken(user: User, res: Response) {
     try {
       const token = await SecurityUtil.generateTokenWithSecret(user);
 
@@ -39,14 +39,7 @@ export default class AuthService {
       // Remove password from output
       user.password = undefined;
 
-      res.status(statusCode).json({
-        statusCode: HttpStatus.OK,
-        message: 'Successfully logged in.',
-        data: {
-          token,
-          user,
-        },
-      });
+      return token;
     } catch (error) {
       console.error('createAndSendAuthToken() error', error);
       throw new AppError(
