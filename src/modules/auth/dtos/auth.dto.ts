@@ -1,12 +1,17 @@
+import { IsEmail, IsNotEmpty, IsString } from 'class-validator';
 import { CreateUserDTO } from '../../user/dtos/user.dto';
 
 export class SignUpDTO extends CreateUserDTO {}
 
 export class LoginDTO {
+  @IsEmail()
+  @IsNotEmpty()
   email: string;
+
+  @IsString()
+  @IsNotEmpty()
   password: string;
 }
 
-
-export type ISignUpDTO = {} & SignUpDTO;
-export type ILoginDTO = {} & LoginDTO;
+export class ISignUpDTO extends SignUpDTO {}
+export class ILoginDTO extends LoginDTO {}

@@ -48,7 +48,10 @@ export class AuthMiddleware implements NestMiddleware {
 
     if (!person) throw new NotFoundException('User was not found.');
 
-    console.info('currently logged in user', person);
+    console.info('currently logged in user', {
+      id: person?.id,
+      email: person?.email,
+    });
 
     // GRANT ACCESS TO PROTECTED ROUTE
     req.currentUser = person;

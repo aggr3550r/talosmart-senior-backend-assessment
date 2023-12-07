@@ -11,7 +11,7 @@ export class PageOptionsDTO {
   @Type(() => Number)
   @IsInt()
   @Min(1)
-  @Max(50)
+  @Max(12)
   @IsOptional()
   take?: number = 12;
 

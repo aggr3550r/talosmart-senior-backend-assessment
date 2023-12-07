@@ -28,7 +28,10 @@ export class AuthController {
   }
 
   @Post('login')
-  async login(@Body() payload: ILoginDTO, @Res() res: Response) {
+  async login(
+    @Body() payload: ILoginDTO,
+    @Res({ passthrough: true }) res: Response,
+  ) {
     try {
       let authToken: string;
       const response = await this.authService.login(payload);

@@ -6,6 +6,7 @@ import {
   Param,
   Post,
   Query,
+  Version,
 } from '@nestjs/common';
 import { ProductService } from './product.service';
 import { ICreateProductDTO } from './dtos/product.dto';

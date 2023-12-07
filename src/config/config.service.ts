@@ -31,35 +31,54 @@ class ConfigService {
   }
 
   public getTypeOrmConfig(): TypeOrmModuleOptions {
-    return {
-      type: 'mysql',
-      host: this.getValue('MYSQL_HOST'),
-      port: parseInt(this.getValue('MYSQL_PORT')),
-      username: this.getValue('MYSQL_USER'),
-      password: this.getValue('MYSQL_PASSWORD'),
-      database: this.getValue('MYSQL_DATABASE'),
-      entities: [
-        __dirname + '/../**/*.entity{.ts,.js}',
-        __dirname + '/../**/*.repository{.ts,.js}',
-      ],
-      migrationsTableName: 'migration',
-      migrations: [__dirname + 'src/migration/*.ts'],
-      // autoLoadEntities: true,
-      synchronize: true,
-      migrationsRun: true,
-      ssl: false,
-    };
+    const currentEnv = this.getValue('NODE_ENV');
+
+    console.info('CURRENT ENV - %s', currentEnv);
+
+    if (currentEnv === 'dev') {
+      return {
+        type: 'mysql',
+        host: this.getValue('DB_HOST'),
+        port: parseInt(this.getValue('DB_PORT')),
+        username: this.getValue('DB_USER'),
+        password: this.getValue('DB_PASSWORD'),
+        database: this.getValue('DATABASE'),
+        entities: [
+          __dirname + '/../**/*.entity{.ts,.js}',
+          __dirname + '/../**/*.repository{.ts,.js}',
+        ],
+        migrationsTableName: 'migration',
+        migrations: [__dirname + 'src/migration/*.ts'],
+        // autoLoadEntities: true,
+        synchronize: true,
+        migrationsRun: true,
+        ssl: false,
+      };
+    } else {
+      return {
+        type: 'postgres',
+        host: this.getValue('DB_HOST'),
+        port: parseInt(this.getValue('DB_PORT')),
+        username: this.getValue('DB_USER'),
+        password: this.getValue('DB_PASSWORD'),
+        database: this.getValue('DATABASE'),
+        entities: [
+          __dirname + '/../**/*.entity{.ts,.js}',
+          __dirname + '/../**/*.repository{.ts,.js}',
+        ],
+        migrationsTableName: 'migration',
+        migrations: [__dirname + 'src/migration/*.ts'],
+        // autoLoadEntities: true,
+        synchronize: true,
+        migrationsRun: true,
+        ssl: false,
+      };
+    }
   }
 }
 
-const configService = new ConfigService(process.env).ensureValues(
-  [
-    'MYSQL_HOST',
-    'MYSQL_PORT',
-    'MYSQL_USER',
-    'MYSQL_PASSWORD',
-    'MYSQL_DATABASE',
-  ],
+let configService: ConfigService = new ConfigService(process.env).ensureValues(
+  ['DB_HOST', 'DB_PORT', 'DB_USER', 'DB_PASSWORD', 'DATABASE'],
   true,
 );
 
