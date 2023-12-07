@@ -22,7 +22,7 @@ class ConfigService {
 
   public isProduction() {
     const mode = this.getValue('NODE_ENV', false)?.toLowerCase();
-    return mode == 'production';
+    return mode == 'production' || 'prod';
   }
 
   public isDevelopment() {
@@ -31,12 +31,11 @@ class ConfigService {
   }
 
   public getTypeOrmConfig(): TypeOrmModuleOptions {
-    const currentEnv = this.getValue('NODE_ENV');
     const pgdBURL = this.getValue('DATABASE_URL');
 
-    console.info('CURRENT ENV - %s', currentEnv);
+    console.log('DB URL - %s', pgdBURL);
 
-    if (currentEnv === 'dev') {
+    if (this.isDevelopment()) {
       return {
         type: 'mysql',
         host: this.getValue('DB_HOST'),
