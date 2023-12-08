@@ -1,73 +1,77 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## Description
+TALOSMART SENIOR BACKEND ASSESSMENT
+
+
 
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+This is a simple cloud backup system that is powered with NestJS, TypeScript, MySQL | PostgreSQL and TypeORM - a combination of top choice modern technology. It is built in partial fulfilment of the interview requirements at Talosmart.
 
-## Installation
+## Functionalities
 
-```bash
-$ npm install
-```
+The idea of the app is one that allows users to sign up and login and also retrieve items and item details based on specified criteria. 
 
 ## Running the app
 
+In order to run the app, the first thing you need to do is clone the code into your local machine and then create a .env file in the root of your project. The .env file should be like the one below
 ```bash
-# development
-$ npm run start
+APP_PORT=3000
+DB_HOST=127.0.0.1
+DB_USER=root
+DB_PASSWORD=medusa
+DB_PORT=3306
+DATABASE=talosmart_datastore
+DATABASE_URL=postgres://victor:7yFlbAq4oXUA0rD9QgiIKg1XHKsU6hhf@dpg-clp39m946foc73a6dp7g-a.oregon-postgres.render.com/talosmart_datastore (NOTE: not needed if environment is dev)
+JWT_SECRET=hapmashKV
+JWT_EXPIRES_IN=24h
+JWT_COOKIE_EXPIRES_IN=24
+NODE_ENV=prod | dev
+```
 
-# watch mode
+With that out of the way, there are two possible paths along which to proceed enumerated below:
+### * Dockerfile
+
+#### Dockerfile
+To run the app using the Dockerfile provided, take the following steps:
+- Setup:
+  Fire up Docker Desktop to make sure that the Docker daemon is up and running
+  
+- Build docker image:
+  Run the following command in the terminal from the root directory of the project:
+ ```
+ docker build -t talosmart-image .
+ ```
+ 
+ - Map the host port to the container port, mount the .env file in your project as a volume onto the image in the container and then run the container:
+  The above step can be achieved by running the following command from the root directory of your project:
+ ```
+ docker run -p 8000:80 /path/to/local/app/.env:/path/to/container/app/.env talosmart-image
+ ```
+  For example, this is the command I personally use:
+ ```
+ docker run -p 8000:80 -v /Users/victor/Desktop/talosmart-senior-backend-assessment/.env:/app/.env talosmart-image:01
+ ```
+That should do it, your Cloud Backup API is up and ready for use @ http://localhost:3000 ! 
+
+Here is the URL to the deployed application on Render:
+https://talosmart-web-service.onrender.com
+
+And here is the URL to the published documentation on Postman:
+https://documenter.getpostman.com/view/23331716/2s9YkgCQF6
+
+
+#### To run the app without Docker
+```bash
+# start server
 $ npm run start:dev
-
-# production mode
-$ npm run start:prod
 ```
 
-## Test
 
-```bash
-# unit tests
-$ npm run test
+- Author - [Victor Uche](https://github.com/aggr3550r/)
 
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
-```
-
-## Support
-
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
 
 ## License
 
-Nest is [MIT licensed](LICENSE).
+Talosmart Senior Backend Assessment is [MIT licensed](LICENSE).
