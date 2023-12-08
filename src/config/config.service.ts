@@ -33,7 +33,7 @@ class ConfigService {
   public getTypeOrmConfig(): TypeOrmModuleOptions {
     const pgdBURL = this.getValue('DATABASE_URL');
 
-    console.log('DB URL - %s', pgdBURL);
+    console.log('DB URL - %s', pgdBURL.split('/')[0]);
 
     if (this.isDevelopment()) {
       return {

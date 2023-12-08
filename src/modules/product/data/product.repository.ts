@@ -30,11 +30,11 @@ export class ProductRepository implements IProductRepository<Product> {
         where,
         select: ['id', 'name', 'description', 'minimum_cost', 'maximum_cost'],
       });
+    } else {
+      product = await this.repository.findOne({
+        where,
+      });
     }
-
-    product = await this.repository.findOne({
-      where,
-    });
 
     return product;
   }
