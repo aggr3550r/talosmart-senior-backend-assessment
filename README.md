@@ -7,7 +7,7 @@ TALOSMART SENIOR BACKEND ASSESSMENT
 
 ## Description
 
-This is a simple cloud backup system that is powered with NestJS, TypeScript, MySQL | PostgreSQL and TypeORM - a combination of top choice modern technology. It is built in partial fulfilment of the interview requirements at Talosmart.
+This is a simple todo application that is powered with NestJS, TypeScript, MySQL | PostgreSQL and TypeORM - a combination of top choice modern technology. It is built in partial fulfilment of the interview requirements at Talosmart.
 
 ## Functionalities
 
